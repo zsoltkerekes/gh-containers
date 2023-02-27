@@ -11,7 +11,12 @@ env:
 jobs:
   test:
     environment: testing
+    timeout-minutes: 10
     runs-on: ubuntu-latest
+
+    container:        # everything runs in the container specified here
+      image: node:16  # and you wil have no access to the tools installed on 'ubuntu-latest'
+                      # only tools you have are those that has been installed in the node container :/ 
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb+srv
       MONGODB_CLUSTER_ADDRESS: ${{ secrets.MONGODB_CLUSTER_ADDRESS }}
