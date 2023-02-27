@@ -19,10 +19,18 @@ jobs:
                       # only tools you have are those that has been installed in the node container :/ 
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb+srv
-      MONGODB_CLUSTER_ADDRESS: ${{ secrets.MONGODB_CLUSTER_ADDRESS }}
-      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      MONGODB_CLUSTER_ADDRESS: mongodb-service  # for real database: ${{ secrets.MONGODB_CLUSTER_ADDRESS }}
+      MONGODB_USERNAME: root                    # for real database: ${{ secrets.MONGODB_USERNAME }}
+      MONGODB_PASSWORD: example                 # for real database: ${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
+    
+    services:
+      mongodb-service:  # these settings come from the 'mongo' docker image - all services can be configure via the help of docker hub
+        image: mongo
+        env: 
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
+
     steps:
       - name: Get Code
         uses: actions/checkout@v3
